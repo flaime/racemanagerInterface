@@ -48,13 +48,13 @@ function extractLanes(lanes, type) {
     const isSingel = lanes && lanes.every(obj => obj.hasOwnProperty('name') && obj.hasOwnProperty('year'));
     const isMultiple = lanes && lanes.every(obj => obj.hasOwnProperty('team'));
     if (type === null)
-        console.log("WARNING the race does not have type set but is asumed to be singel")
+        console.warn("WARNING the race does not have type set but is asumed to be singel")
 
-    var tracks = []
+    let tracks = [];
     if (isSingel) {
         //if it C1 or K1
         tracks = lanes.map(lane => {
-            let licensNumber = cyrb53((lane.namne + lane.club));
+            let licensNumber = cyrb53((lane.name + lane.club));
             // console.log(lane)
             return {
                 "licensNumber": null,
@@ -89,7 +89,7 @@ function extractLanes(lanes, type) {
                     "licensNumber": licensNumber.toString(), //"12344-053", does only exist when people run in a besättningslopp i API:et?!
                     "club": cyrb53(participant.club).toString(),//"KKK"
                     // "club": participant.club //"KKK"
-                    "InternalClubb": lane.club
+                    "InternalClubb": participant.club
                 }
             })
 
