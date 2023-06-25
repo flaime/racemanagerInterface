@@ -178,9 +178,8 @@ async function fetchCompetition(racemangerUrl, competitionName, kanotLiveUrl) {
     const competition = await fetch(racemangerCompUrl)//h-stregatta-2022
         .then(response => response.json())
         .then(data => {
-            var races = data.races;
-            if (races === null)
-                races = []
+            let races = data.races === null ? [] : data.races;
+
             const promises = races.map(race => {
                 return fetch(race.url)
                     .then(response => response.json())
@@ -256,21 +255,8 @@ function sendClubs(competition) {
         clubbObjects.push(clubb);
     });
 
-
-    // clubbs.forEach(function(value) {
-    //     // Create a new object for each element in the Set
-    //     const clubb = {
-    //         "shortName": value,
-    //         "fullName": value,
-    //         "displayName": value,
-    //         "licensNumber": cyrb53(value).toString(),
-    //     };
-    //
-    //     // Add the object to the array
-    //     clubbObjects.push(clubb);
-    // });
-
-    console.log(JSON.stringify(clubbObjects))
+    let clubsJson = JSON.stringify(clubbObjects);
+    console.log(clubsJson)
     console.log("sending clubbs")
     const url = "https://canoe-test-dev-3cizi.ondigitalocean.app/api/club/"
     fetch(url, {
@@ -278,10 +264,10 @@ function sendClubs(competition) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(clubbs)
+        body: clubsJson
     })
         // .then(response => response.json())
-        .then(data => console.log(data.status))
+        .then(data => console.log(data.status + "hej"))
         // .then(data => console.log(data))
         .catch(error => console.error(error));
 }
