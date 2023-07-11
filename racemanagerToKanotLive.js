@@ -31,6 +31,10 @@ function getTime(result) {
         return result.replace(".", ",");
 }
 
+function clubId(club) {
+    return findClubMetadata(club, cyrb53(club).toString()).id;
+}
+
 function extractLanes(lanes, type) {
 
     const isSingel = lanes && lanes.every(obj => obj.hasOwnProperty('name') && obj.hasOwnProperty('year'));
@@ -59,7 +63,7 @@ function extractLanes(lanes, type) {
                             "sex": "", //"H", finns inte data om i API
                             "yearOfBirth": lane.year.toString(), //"2001",
                             "licensNumber": licensNumber.toString(), //"12344-053", does only exist when people run in a besättningslopp i API:et?!
-                            "club": cyrb53(lane.club).toString(), //"KKK"
+                            "club": clubId(lane.club), //"KKK"
                             // "club": lane.club //"KKK"
                             "InternalClubb": lane.club
 
@@ -229,6 +233,22 @@ function compareString(str1, str2) {
 }
 
 
+function findClubMetadata(name, clubId) {
+    let cleanName = (name || "").replace("&amp;", "&")
+    let metadataClub = clubsMetadata.find(club => compareString(club.full_name, cleanName));
+    if (metadataClub === undefined) {
+        console.warn("Club: " + cleanName + " is missing from metadata")
+        return {
+            "id": clubId,
+            "display_name": cleanName,
+            "full_name": cleanName,
+            "licens_number": cleanName,
+            "short_name": cleanName
+        }
+    }
+    return metadataClub;
+}
+
 function sendClubs(competition) {
     console.log("sending comp")
     const clubbs = new Map();
@@ -244,20 +264,14 @@ function sendClubs(competition) {
 
     clubbs.forEach((value, key) => {
         let name = (value || "").replace("&amp;", "&")
-        console.log(`${key} => ${name}`);
-        let metadataClub = clubsMetadata.find(club => compareString(club.full_name, name));
-        if (metadataClub === undefined) {
-            console.warn("Club: " + value + " is missing from metadata")
-            metadataClub = {
-                "short_name": name,
-                "display_name": name
-            };
-        }
+        let clubId = key
+        console.log(`${clubId} => ${name}`);
+        let metadataClub = findClubMetadata(name, clubId);
         const clubb = {
-            "shortName": metadataClub.short_name || name,
-            "fullName": name,
-            "displayName": metadataClub.display_name || name,
-            "licensNumber": key,
+            "shortName": metadataClub.short_name,
+            "fullName": metadataClub.full_name,
+            "displayName": metadataClub.display_name,
+            "licensNumber": metadataClub.id,
         };
 
         // Add the object to the array
