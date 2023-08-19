@@ -318,7 +318,8 @@ async function main(props) {
         // {"id": "v-rregatta-2023-2023", "name": "Vårregattan-2023"}
 
         // {"id": "297615", "name": "sprint_SM-2023"}
-        {"id": "sm-sprint-nyk-ping-2023", "name": "sprint_SM-2023"}
+        // {"id": "sm-sprint-nyk-ping-2023", "name": "sprint_SM-2023"},
+        {"id": "marathon-sm-s-dert-lje-2023", "name": "Marathon-SM_Södertälje_2023`"}
 
         /*{"id": "suc-fagervik-2020", "name":"suc-fagervik-2022"},// id: 238117, "suc-fagervik-2020"
         {"id": "suc-ryrsjn-och-sup-sm-supersprint", "name":"RYRSJÖN-SUC-OCH-SUP-SM-SUPERSPRINT"}, //269340
