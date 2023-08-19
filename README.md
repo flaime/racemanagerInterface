@@ -2,17 +2,12 @@
 
 ## How to find the "ID" of a competition:
 
-Go to the competition page on racemanager, and look at the URL. It should look something like this:
-
-```
-https://racemanager.io/competitions/5e8b1b2b4f9b7c0001b2b4f9
-```
-
 Go to:
-https://se.racemanager.net/en 
+```
+https://se.racemanager.net/en
+```
 
 and find the competition you want to extract data from. Click on the competition, and look at the URL. It should look something like this:
-
 
 ```
 https://se.racemanager.net/en/results/competition/324702/
